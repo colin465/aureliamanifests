@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Manifestation Vision Board — Aurelia</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0D1B2A;
+    --navy-mid: #1A2744;
+    --navy-light: #243354;
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-faint: rgba(201,168,76,0.12);
+    --gold-faint2: rgba(201,168,76,0.06);
+    --cream: #FDF6E3;
+    --lavender: #B8A9C9;
+    --white: #FAFAFA;
+    --muted: rgba(250,250,250,0.55);
+    --border: rgba(201,168,76,0.25);
+    --border-hover: rgba(201,168,76,0.5);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Star field */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 15%, rgba(201,168,76,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 25% 40%, rgba(255,255,255,0.2) 0%, transparent 100%),
+      radial-gradient(1px 1px at 50% 10%, rgba(201,168,76,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 25%, rgba(255,255,255,0.15) 0%, transparent 100%),
+      radial-gradient(1px 1px at 85% 60%, rgba(201,168,76,0.35) 0%, transparent 100%),
+      radial-gradient(1px 1px at 35% 70%, rgba(255,255,255,0.2) 0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 80%, rgba(201,168,76,0.25) 0%, transparent 100%),
+      radial-gradient(1px 1px at 15% 85%, rgba(255,255,255,0.15) 0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 50%, rgba(201,168,76,0.2) 0%, transparent 100%),
+      radial-gradient(1px 1px at 45% 90%, rgba(255,255,255,0.1) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Ambient glow */
+  body::after {
+    content: '';
+    position: fixed;
+    top: -20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(ellipse, rgba(201,168,76,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .app-shell {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 1.5rem 4rem;
+  }
+
+  /* Header */
+  header {
+    text-align: center;
+    padding: 3rem 1rem 2rem;
+    border-bottom: 0.5px solid var(--border);
+    margin-bottom: 2.5rem;
+  }
+
+  .header-tag {
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .header-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 6vw, 52px);
+    font-weight: 300;
+    color: var(--gold-light);
+    line-height: 1.1;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.02em;
+  }
+
+  .header-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--lavender);
+    line-height: 1.7;
+    max-width: 480px;
+    margin: 0 auto 1.5rem;
+  }
+
+  .progress-track {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+    border-radius: 99px;
+    margin-top: 1.5rem;
+    position: relative;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    border-radius: 99px;
+    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .progress-label {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    margin-top: 0.5rem;
+    text-align: right;
+  }
+
+  /* Step navigation */
+  .step-nav {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+
+  .step-pill {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    padding: 5px 12px;
+    border-radius: 99px;
+    border: 0.5px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Jost', sans-serif;
+    font-weight: 400;
+  }
+
+  .step-pill:hover { border-color: var(--border-hover); color: var(--white); }
+  .step-pill.active { background: var(--gold-faint); border-color: var(--gold); color: var(--gold-light); }
+  .step-pill.done { border-color: rgba(201,168,76,0.4); color: var(--gold); }
+
+  /* Cards */
+  .card {
+    background: rgba(26,39,68,0.6);
+    border: 0.5px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    backdrop-filter: blur(8px);
+    animation: fadeUp 0.4s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .card-icon {
+    font-size: 28px;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 400;
+    color: var(--gold-light);
+    margin-bottom: 0.35rem;
+    line-height: 1.2;
+  }
+
+  .card-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--lavender);
+    margin-bottom: 1.75rem;
+    line-height: 1.6;
+  }
+
+  .gold-rule {
+    border: none;
+    border-top: 0.5px solid var(--border);
+    margin: 1.5rem 0;
+  }
+
+  /* Fields */
+  .field { margin-bottom: 1.25rem; }
+
+  .field-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+
+  .field-hint {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--lavender);
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+
+  textarea, input[type=text] {
+    width: 100%;
+    background: rgba(13,27,42,0.7);
+    border: 0.5px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 15px;
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--white);
+    line-height: 1.7;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    resize: vertical;
+  }
+
+  textarea::placeholder, input[type=text]::placeholder {
+    color: rgba(250,250,250,0.25);
+    font-style: italic;
+  }
+
+  textarea:focus, input[type=text]:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.1);
+  }
+
+  /* Two column fields */
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  /* Affirmations grid */
+  .aff-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .aff-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(13,27,42,0.5);
+    border: 0.5px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 12px;
+  }
+
+  .aff-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--gold);
+    min-width: 22px;
+    font-weight: 300;
+  }
+
+  .aff-item input {
+    background: transparent;
+    border: none;
+    padding: 0;
+    border-radius: 0;
+    font-size: 14px;
+    box-shadow: none;
+  }
+
+  .aff-item input:focus { box-shadow: none; border: none; }
+
+  /* Contract box */
+  .contract-box {
+    background: rgba(13,27,42,0.8);
+    border: 0.5px solid var(--gold);
+    border-radius: 12px;
+    padding: 2rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 17px;
+    line-height: 2;
+    color: var(--white);
+    text-align: center;
+    margin: 1.25rem 0;
+  }
+
+  .contract-name {
+    color: var(--gold-light);
+    font-weight: 600;
+    border-bottom: 0.5px solid var(--gold);
+    padding: 0 4px;
+  }
+
+  /* Buttons */
+  .btn-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.75rem;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    padding: 11px 22px;
+    border-radius: 99px;
+    border: 0.5px solid var(--border);
+    background: transparent;
+    color: var(--white);
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn:hover { border-color: var(--border-hover); background: var(--gold-faint2); }
+
+  .btn-gold {
+    background: var(--gold);
+    color: var(--navy);
+    border-color: var(--gold);
+    font-weight: 500;
+  }
+
+  .btn-gold:hover { background: var(--gold-light); border-color: var(--gold-light); }
+
+  .btn-outline-gold {
+    border-color: var(--gold);
+    color: var(--gold-light);
+  }
+
+  .btn-outline-gold:hover { background: var(--gold-faint); }
+
+  /* Cover page */
+  .cover-center {
+    text-align: center;
+    padding: 1rem 0;
+  }
+
+  .moon-glyph {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 56px;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .cover-title-big {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 7vw, 58px);
+    font-weight: 300;
+    color: var(--gold-light);
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+  }
+
+  .cover-rule {
+    width: 120px;
+    border: none;
+    border-top: 0.5px solid var(--gold);
+    margin: 1.25rem auto;
+  }
+
+  .cover-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--lavender);
+    line-height: 1.8;
+    max-width: 420px;
+    margin: 0 auto 1.5rem;
+  }
+
+  .cover-instructions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+    margin: 1.75rem 0;
+    text-align: left;
+  }
+
+  .instruction-item {
+    background: var(--gold-faint2);
+    border: 0.5px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem;
+  }
+
+  .instruction-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    font-weight: 300;
+  }
+
+  .instruction-text {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* Summary / complete page */
+  .summary-block {
+    background: var(--gold-faint2);
+    border: 0.5px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .summary-label {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+
+  .summary-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    color: var(--white);
+    line-height: 1.7;
+    white-space: pre-wrap;
+  }
+
+  .complete-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 300;
+    color: var(--gold-light);
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .final-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--lavender);
+    text-align: center;
+    line-height: 1.8;
+    margin: 1.5rem 0;
+  }
+
+  /* Download button */
+  .download-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(13,27,42,0.95);
+    border-top: 0.5px solid var(--border);
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+  }
+
+  .download-bar-text {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .aurelia-footer {
+    text-align: center;
+    padding: 1rem 0 5rem;
+    font-size: 12px;
+    color: rgba(201,168,76,0.5);
+    letter-spacing: 0.12em;
+  }
+
+  /* Responsive */
+  @media (max-width: 540px) {
+    .field-row { grid-template-columns: 1fr; }
+    .aff-grid { grid-template-columns: 1fr; }
+    .card { padding: 1.25rem; }
+    header { padding: 2rem 0.5rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app-shell">
+  <header>
+    <div class="header-tag">✦ Aurelia ✦ Law of Attraction</div>
+    <h1 class="header-title">My Manifestation<br>Vision Board</h1>
+    <p class="header-sub">"Write your desires in the present tense. You are not wishing. You are remembering what is already yours."</p>
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill" style="width:0%"></div>
+    </div>
+    <div class="progress-label" id="progressLabel">Step 1 of 9</div>
+  </header>
+
+  <nav class="step-nav" id="stepNav" aria-label="Vision board sections"></nav>
+
+  <main id="pageContent" role="main"></main>
+
+  <footer class="aurelia-footer">✦ aurelia.manifests ✦ align · attract · become</footer>
+</div>
+
+<div class="download-bar" id="downloadBar" style="display:none">
+  <span class="download-bar-text" id="saveStatus">✦ Auto-saving to your browser</span>
+  <button class="btn btn-outline-gold" onclick="downloadBoard()">&#8675; Save as text file</button>
+</div>
+
+<script>
+const STEPS = [
+  { id:'cover',    label:'Welcome',      icon:'🌙' },
+  { id:'intent',   label:'Intention',    icon:'✨' },
+  { id:'home',     label:'Home',         icon:'🏡' },
+  { id:'wealth',   label:'Wealth',       icon:'💰' },
+  { id:'love',     label:'Love',         icon:'💞' },
+  { id:'health',   label:'Health',       icon:'🌿' },
+  { id:'purpose',  label:'Purpose',      icon:'⭐' },
+  { id:'affirm',   label:'Affirmations', icon:'📜' },
+  { id:'contract', label:'Contract',     icon:'🔮' },
+  { id:'complete', label:'Complete',     icon:'💫' },
+];
+
+// Load from localStorage on start
+function loadFromStorage() {
+  try {
+    const saved = localStorage.getItem('aurelia_vision_board');
+    if (saved) return JSON.parse(saved);
+  } catch(e) {}
+  return null;
+}
+
+function saveToStorage() {
+  try {
+    localStorage.setItem('aurelia_vision_board', JSON.stringify(D));
+    const el = document.getElementById('saveStatus');
+    if(el) {
+      el.textContent = '✦ Saved';
+      el.style.color = '#C9A84C';
+      setTimeout(() => {
+        el.textContent = '✦ Auto-saving to your browser';
+        el.style.color = '';
+      }, 1500);
+    }
+  } catch(e) {}
+}
+
+const SAVED = loadFromStorage();
+
+const D = {
+  name: SAVED?.name||'', date: SAVED?.date||'',
+  intent_desire: SAVED?.intent_desire||'', intent_worthy: SAVED?.intent_worthy||'', intent_feeling: SAVED?.intent_feeling||'',
+  home_live: SAVED?.home_live||'', home_daily: SAVED?.home_daily||'', home_grateful: SAVED?.home_grateful||'',
+  wealth_money: SAVED?.wealth_money||'', wealth_receive: SAVED?.wealth_receive||'', wealth_freedom: SAVED?.wealth_freedom||'', wealth_affirmation: SAVED?.wealth_affirmation||'',
+  love_self: SAVED?.love_self||'', love_relationship: SAVED?.love_relationship||'', love_people: SAVED?.love_people||'', love_give: SAVED?.love_give||'',
+  health_body: SAVED?.health_body||'', health_care: SAVED?.health_care||'', health_mind: SAVED?.health_mind||'', health_affirmation: SAVED?.health_affirmation||'',
+  purpose_purpose: SAVED?.purpose_purpose||'', purpose_known: SAVED?.purpose_known||'', purpose_achieved: SAVED?.purpose_achieved||'', purpose_grow: SAVED?.purpose_grow||'',
+  affirmations: SAVED?.affirmations || Array(10).fill(''),
+  signed: SAVED?.signed||'', signed_date: SAVED?.signed_date||'',
+};
+
+let cur = 0;
+
+function sv(k,v){ D[k]=v; saveToStorage(); }
+function sva(i,v){ D.affirmations[i]=v; saveToStorage(); }
+
+function inp(id, ph){ return `<input type="text" id="${id}" placeholder="${ph}" value="${D[id]||''}" oninput="sv('${id}',this.value)">`; }
+function ta(id, rows, ph){ return `<textarea id="${id}" rows="${rows}" placeholder="${ph}" oninput="sv('${id}',this.value)">${D[id]||''}</textarea>`; }
+
+function field(label, id, rows, ph, hint=''){
+  return `<div class="field">
+    <label class="field-label">${label}</label>
+    ${hint ? `<div class="field-hint">${hint}</div>` : ''}
+    ${rows===1 ? inp(id,ph) : ta(id,rows,ph)}
+  </div>`;
+}
+
+function navBtns(showBack=true, nextLabel='Continue →'){
+  return `<div class="btn-row">
+    ${showBack ? `<button class="btn" onclick="go(-1)">← Back</button>` : '<span></span>'}
+    <button class="btn btn-gold" onclick="go(1)">${nextLabel}</button>
+  </div>`;
+}
+
+const PAGES = {
+
+  cover: ()=>`
+    <div class="card cover-center">
+      <span class="moon-glyph">☽</span>
+      <div class="cover-title-big">Welcome,<br>beautiful soul.</div>
+      <hr class="cover-rule">
+      <p class="cover-quote">This board has 8 sections. Take your time with each one.<br>Write from the feeling, not from the lack.<br>The universe responds to your certainty.</p>
+      <div class="cover-instructions">
+        <div class="instruction-item">
+          <div class="instruction-num">01</div>
+          <div class="instruction-text">Write everything in the present tense — as if already received</div>
+        </div>
+        <div class="instruction-item">
+          <div class="instruction-num">02</div>
+          <div class="instruction-text">Feel the emotion behind every word as you write it</div>
+        </div>
+        <div class="instruction-item">
+          <div class="instruction-num">03</div>
+          <div class="instruction-text">Return to your board every morning and read it aloud</div>
+        </div>
+        <div class="instruction-item">
+          <div class="instruction-num">04</div>
+          <div class="instruction-text">Sign the sacred contract at the end — and mean every word</div>
+        </div>
+      </div>
+      ${navBtns(false, 'Begin my vision board ✦')}
+    </div>`,
+
+  intent: ()=>`
+    <div class="card">
+      <span class="card-icon">✨</span>
+      <h2 class="card-title">My Sacred Intention</h2>
+      <p class="card-sub">Begin here. Set your intention with complete clarity before anything else.</p>
+      <hr class="gold-rule">
+      <div class="field-row">
+        ${field('My name is', 'name', 1, 'Your name...')}
+        ${field("Today's date", 'date', 1, 'e.g. 15 May 2026')}
+      </div>
+      ${field('I am manifesting...', 'intent_desire', 4, 'I am living in my dream home, surrounded by abundance and love...', 'Your most important desire — present tense, already yours. Be specific and bold.')}
+      ${field('I deserve this because...', 'intent_worthy', 3, 'I am worthy because I am...', 'Affirm your worthiness. You have always been enough.')}
+      ${field('I will know I have received it when I feel...', 'intent_feeling', 2, 'I feel free, expansive, deeply grateful and at peace...', 'Describe the emotion. The feeling is the frequency.')}
+      ${navBtns()}
+    </div>`,
+
+  home: ()=>`
+    <div class="card">
+      <span class="card-icon">🏡</span>
+      <h2 class="card-title">My Home & Lifestyle</h2>
+      <p class="card-sub">Describe the life you are already living in your most abundant, beautiful reality.</p>
+      <hr class="gold-rule">
+      ${field('I live in...', 'home_live', 4, 'I live in a beautiful home that feels like...', 'Describe your dream home — where it is, what it feels like, what you see every morning.')}
+      ${field('My daily life looks like...', 'home_daily', 3, 'Every morning I wake up and...', 'How do you spend your days? What does true freedom feel like in your body?')}
+      ${field('I am grateful every day for...', 'home_grateful', 2, 'I give thanks every day for the way my home and life make me feel...', 'What does your lifestyle give you that fills your heart completely?')}
+      ${navBtns()}
+    </div>`,
+
+  wealth: ()=>`
+    <div class="card">
+      <span class="card-icon">💰</span>
+      <h2 class="card-title">My Wealth & Abundance</h2>
+      <p class="card-sub">Money is energy. Write about it as a friend, a flow, a force that adores you.</p>
+      <hr class="gold-rule">
+      ${field('My relationship with money is...', 'wealth_money', 2, 'Money is my friend and it flows to me easily because...', 'Write about money as a loving, responsive energy — not a struggle.')}
+      ${field('I earn and receive...', 'wealth_receive', 2, 'Financial abundance flows to me through...', 'State your financial reality as already true. Be specific and bold.')}
+      ${field('Financial freedom means to me...', 'wealth_freedom', 3, 'Being financially free means I am able to...', 'What does abundance allow you to do, be, give and experience?')}
+      ${field('My abundance affirmation is...', 'wealth_affirmation', 1, 'Money flows to me easily, joyfully and in abundance...', 'One powerful present-tense statement about your financial reality.')}
+      ${navBtns()}
+    </div>`,
+
+  love: ()=>`
+    <div class="card">
+      <span class="card-icon">💞</span>
+      <h2 class="card-title">My Love & Relationships</h2>
+      <p class="card-sub">Self-love is the foundation of all manifestation. Begin within, and everything flows outward.</p>
+      <hr class="gold-rule">
+      ${field('My relationship with myself is...', 'love_self', 2, 'I love and honour myself fully. I treat myself with...', 'How do you love, honour and care for yourself in your most aligned life?')}
+      ${field('I am in a relationship that...', 'love_relationship', 3, 'My relationship is a beautiful partnership full of...', 'Describe your ideal relationship — how it feels, not just what it looks like.')}
+      ${field('The people in my life...', 'love_people', 2, 'I am surrounded by people who love, support and inspire me...', 'How do your friendships, family and community feel in your manifested life?')}
+      ${field('Love flows through my life by...', 'love_give', 2, 'I give and receive love freely and joyfully through...', 'How does love move through your daily experience?')}
+      ${navBtns()}
+    </div>`,
+
+  health: ()=>`
+    <div class="card">
+      <span class="card-icon">🌿</span>
+      <h2 class="card-title">My Health & Wellbeing</h2>
+      <p class="card-sub">Your body is your sacred vessel. Describe it in its most vibrant, alive and radiant state.</p>
+      <hr class="gold-rule">
+      ${field('My body feels...', 'health_body', 2, 'My body feels strong, alive, vibrant and deeply...', 'Describe your physical wellbeing in your most radiant, healthy reality.')}
+      ${field('I take care of myself by...', 'health_care', 2, 'Every day I nourish my body and soul by...', 'What daily practices keep you aligned, healthy and energised?')}
+      ${field('My mind is...', 'health_mind', 2, 'My mind is clear, calm, confident and at peace...', 'Describe your mental and emotional state in your most aligned life.')}
+      ${field('My health affirmation is...', 'health_affirmation', 1, 'My body is healthy, strong and full of vibrant energy...', 'One powerful statement about your radiant body and peaceful mind.')}
+      ${navBtns()}
+    </div>`,
+
+  purpose: ()=>`
+    <div class="card">
+      <span class="card-icon">⭐</span>
+      <h2 class="card-title">My Purpose & Growth</h2>
+      <p class="card-sub">You are here for a reason. Write it into existence with full conviction.</p>
+      <hr class="gold-rule">
+      ${field('My purpose in this world is...', 'purpose_purpose', 2, 'I am here to inspire, create and contribute...', 'What are you here to do, be and give to the world?')}
+      ${field('I am known for...', 'purpose_known', 2, 'People know me as someone who...', 'How do others describe you in your most aligned, successful life?')}
+      ${field('I have achieved...', 'purpose_achieved', 3, 'I have built, created and accomplished...', 'What milestones and achievements define your purposeful, abundant life?')}
+      ${field('I continue to grow by...', 'purpose_grow', 2, 'I invest in myself daily by...', 'How do you develop your knowledge, gifts and spiritual depth?')}
+      ${navBtns()}
+    </div>`,
+
+  affirm: ()=>`
+    <div class="card">
+      <span class="card-icon">📜</span>
+      <h2 class="card-title">My 10 Vision Board Affirmations</h2>
+      <p class="card-sub">Write 10 powerful present-tense affirmations that cover all areas of your vision. Read these aloud every single morning.</p>
+      <hr class="gold-rule">
+      <div class="aff-grid">
+        ${D.affirmations.map((v,i)=>`
+          <div class="aff-item">
+            <span class="aff-num">${i+1}</span>
+            <input type="text" placeholder="I am..." value="${v}" oninput="sva(${i},this.value)">
+          </div>`).join('')}
+      </div>
+      ${navBtns()}
+    </div>`,
+
+  contract: ()=>{
+    const nm = D.name || '__________________';
+    return `<div class="card">
+      <span class="card-icon">🔮</span>
+      <h2 class="card-title">My Sacred Contract with the Universe</h2>
+      <p class="card-sub">This is your commitment. Sign it. Mean it. Return to it whenever you need to remember who you are.</p>
+      <hr class="gold-rule">
+      <div class="contract-box">
+        I, <span class="contract-name">${nm}</span>, declare that I am ready to receive everything I have written in this vision board.<br><br>
+        I release all doubt. I release all fear. I release all limitation.<br><br>
+        I am worthy. I am aligned. I am a powerful magnet for all that I desire.<br><br>
+        I trust the universe completely and unconditionally.<br>I know that what I seek is also seeking me.<br><br>
+        <em>My abundant life is not coming. It is already here.<br>I am simply becoming ready to receive it.</em>
+      </div>
+      <div class="field-row">
+        ${field('Signed', 'signed', 1, 'Sign your name here...')}
+        ${field('Date', 'signed_date', 1, "Today's date...")}
+      </div>
+      ${navBtns(true, 'Complete my vision board ✦')}
+    </div>`;
+  },
+
+  complete: ()=>`
+    <div class="card">
+      <div style="text-align:center; padding: 0.5rem 0 1.5rem;">
+        <span style="font-size:52px; display:block; margin-bottom:1rem;">🌙</span>
+        <div class="complete-title">Your vision board<br>is complete.</div>
+        <hr class="cover-rule">
+        <p class="final-quote">"She wrote it down. She believed it.<br>And then she lived it."<br><span style="font-size:14px; letter-spacing:0.1em;">— Aurelia</span></p>
+      </div>
+      <hr class="gold-rule">
+      ${D.intent_desire ? `<div class="summary-block"><div class="summary-label">Your intention</div><div class="summary-text">${D.intent_desire}</div></div>` : ''}
+      ${D.affirmations.filter(a=>a).length ? `<div class="summary-block"><div class="summary-label">Your affirmations</div><div class="summary-text">${D.affirmations.filter(a=>a).map((a,i)=>`${i+1}. ${a}`).join('\n')}</div></div>` : ''}
+      ${D.signed ? `<div class="summary-block"><div class="summary-label">Signed by</div><div class="summary-text">${D.signed} · ${D.signed_date||''}</div></div>` : ''}
+      <div class="btn-row" style="justify-content:center; flex-wrap:wrap; gap:12px; margin-top:1.75rem;">
+        <button class="btn" onclick="go(-1)">← Review & edit</button>
+        <button class="btn btn-outline-gold" onclick="downloadBoard()">&#8675; Save my board</button>
+        <button class="btn" onclick="clearBoard()">Clear & start over</button>
+      </div>
+      <p style="text-align:center; font-size:13px; color:rgba(201,168,76,0.6); margin-top:1.5rem; letter-spacing:0.06em;">
+        Follow Aurelia · @aurelia.manifests · TikTok & Instagram
+      </p>
+    </div>`,
+};
+
+function renderNav(){
+  const nav = document.getElementById('stepNav');
+  nav.innerHTML = STEPS.map((s,i)=>{
+    const cls = i===cur ? 'active' : i<cur ? 'done' : '';
+    return `<button class="step-pill ${cls}" onclick="jumpTo(${i})" aria-current="${i===cur?'step':'false'}">${s.icon} ${s.label}</button>`;
+  }).join('');
+
+  const pct = Math.round((cur / (STEPS.length-1)) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = `Step ${cur+1} of ${STEPS.length}`;
+  document.getElementById('downloadBar').style.display = cur > 0 ? 'flex' : 'none';
+}
+
+function clearBoard(){
+  if(confirm('Are you sure? This will clear all your answers and cannot be undone.')) {
+    localStorage.removeItem('aurelia_vision_board');
+    Object.keys(D).forEach(k => {
+      if(k === 'affirmations') D[k] = Array(10).fill('');
+      else D[k] = '';
+    });
+    cur = 0;
+    render();
+  }
+}
+
+function render(){
+  const id = STEPS[cur].id;
+  document.getElementById('pageContent').innerHTML = PAGES[id]();
+  renderNav();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function go(dir){
+  const next = cur + dir;
+  if(next < 0 || next >= STEPS.length) return;
+  cur = next;
+  render();
+}
+
+function jumpTo(i){
+  if(i <= cur){ cur = i; render(); }
+}
+
+function downloadBoard(){
+  const lines = [
+    '✨ MY MANIFESTATION VISION BOARD — AURELIA',
+    '━'.repeat(50),
+    '',
+    '📅 Date: ' + (D.date||''),
+    '👤 Name: ' + (D.name||''),
+    '',
+    '✨ MY SACRED INTENTION',
+    D.intent_desire,
+    '',
+    '💭 I deserve this because:',
+    D.intent_worthy,
+    '',
+    '🌙 I will feel:',
+    D.intent_feeling,
+    '',
+    '━'.repeat(50),
+    '🏡 MY HOME & LIFESTYLE',
+    'I live in: ' + D.home_live,
+    'My daily life: ' + D.home_daily,
+    'I am grateful for: ' + D.home_grateful,
+    '',
+    '━'.repeat(50),
+    '💰 MY WEALTH & ABUNDANCE',
+    'Money relationship: ' + D.wealth_money,
+    'I earn & receive: ' + D.wealth_receive,
+    'Freedom means: ' + D.wealth_freedom,
+    'Affirmation: ' + D.wealth_affirmation,
+    '',
+    '━'.repeat(50),
+    '💞 MY LOVE & RELATIONSHIPS',
+    'Self love: ' + D.love_self,
+    'Relationship: ' + D.love_relationship,
+    'People: ' + D.love_people,
+    'Love flows: ' + D.love_give,
+    '',
+    '━'.repeat(50),
+    '🌿 MY HEALTH & WELLBEING',
+    'My body: ' + D.health_body,
+    'Self care: ' + D.health_care,
+    'My mind: ' + D.health_mind,
+    'Affirmation: ' + D.health_affirmation,
+    '',
+    '━'.repeat(50),
+    '⭐ MY PURPOSE & GROWTH',
+    'Purpose: ' + D.purpose_purpose,
+    'Known for: ' + D.purpose_known,
+    'Achieved: ' + D.purpose_achieved,
+    'Growth: ' + D.purpose_grow,
+    '',
+    '━'.repeat(50),
+    '📜 MY 10 AFFIRMATIONS',
+    ...D.affirmations.map((a,i)=> a ? `${i+1}. ${a}` : '').filter(Boolean),
+    '',
+    '━'.repeat(50),
+    '🔮 MY SACRED CONTRACT',
+    `Signed: ${D.signed}   Date: ${D.signed_date}`,
+    '',
+    '"My abundant life is not coming. It is already here.',
+    'I am simply becoming ready to receive it."',
+    '',
+    '✦ aurelia.manifests ✦ align · attract · become',
+  ];
+
+  const blob = new Blob([lines.join('\n')], {type:'text/plain'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'My-Aurelia-Vision-Board.txt';
+  a.click();
+}
+
+render();
+</script>
+</body>
+</html>
