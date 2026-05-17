@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aurelia — Law of Attraction & Manifestation</title>
+<meta name="description" content="Aurelia is a manifestation guide and Law of Attraction teacher. Discover her teachings, tools and resources to help you align your mind and attract your most abundant life.">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Cinzel:wght@400;500&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ── Reset & Root ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --navy:       #080F1C;
+  --navy-mid:   #0E1A2E;
+  --navy-card:  #111E33;
+  --navy-light: #1C2D47;
+  --gold:       #C4933A;
+  --gold-light: #DDB96A;
+  --gold-pale:  #F0D898;
+  --gold-faint: rgba(196,147,58,0.10);
+  --gold-line:  rgba(196,147,58,0.28);
+  --cream:      #F5ECD7;
+  --lavender:   #A99BBE;
+  --mist:       rgba(245,236,215,0.55);
+  --white:      #FAF8F4;
+  --font-display: 'Cinzel', serif;
+  --font-serif:   'Cormorant Garamond', serif;
+  --font-sans:    'Jost', sans-serif;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--navy);
+  color: var(--white);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ── Custom cursor ──────────────────────────────────────── */
+.cursor {
+  width: 8px; height: 8px;
+  background: var(--gold);
+  border-radius: 50%;
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%,-50%);
+  transition: transform 0.15s, width 0.2s, height 0.2s, background 0.2s;
+  mix-blend-mode: screen;
+}
+.cursor-ring {
+  width: 32px; height: 32px;
+  border: 1px solid rgba(196,147,58,0.5);
+  border-radius: 50%;
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%,-50%);
+  transition: all 0.08s linear;
+}
+body:hover .cursor { opacity: 1; }
+
+/* ── Noise grain overlay ────────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.4;
+}
+
+/* ── Navigation ─────────────────────────────────────────── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 500;
+  padding: 1.25rem 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.4s, backdrop-filter 0.4s;
+}
+nav.scrolled {
+  background: rgba(8,15,28,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 0.5px solid var(--gold-line);
+}
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 18px;
+  letter-spacing: 0.18em;
+  color: var(--gold-light);
+  text-decoration: none;
+}
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--mist);
+  text-decoration: none;
+  transition: color 0.2s;
+  font-weight: 300;
+}
+.nav-links a:hover { color: var(--gold-light); }
+.nav-cta {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--navy);
+  background: var(--gold);
+  padding: 9px 20px;
+  border-radius: 1px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+.nav-cta:hover { background: var(--gold-light); }
+
+/* ── Hero ───────────────────────────────────────────────── */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Geometric background lines */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(135deg, transparent 40%, rgba(196,147,58,0.03) 40%, rgba(196,147,58,0.03) 60%, transparent 60%),
+    linear-gradient(45deg, transparent 30%, rgba(196,147,58,0.02) 30%, rgba(196,147,58,0.02) 70%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Radial glow behind image */
+.hero::after {
+  content: '';
+  position: absolute;
+  right: 0; top: 0;
+  width: 60%;
+  height: 100%;
+  background: radial-gradient(ellipse at 70% 50%, rgba(196,147,58,0.08) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.hero-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8rem 4rem 6rem 6rem;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-tag {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  letter-spacing: 0.35em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.2s ease forwards;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.hero-tag::before {
+  content: '';
+  width: 32px;
+  height: 0.5px;
+  background: var(--gold);
+}
+
+.hero-name {
+  font-family: var(--font-display);
+  font-size: clamp(52px, 6vw, 88px);
+  font-weight: 400;
+  color: var(--gold-pale);
+  line-height: 0.95;
+  letter-spacing: 0.04em;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.4s ease forwards;
+}
+
+.hero-title {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(16px, 1.8vw, 22px);
+  color: var(--lavender);
+  line-height: 1.6;
+  margin-bottom: 2.5rem;
+  font-weight: 300;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.6s ease forwards;
+}
+
+.hero-quote {
+  font-family: var(--font-serif);
+  font-size: clamp(22px, 2.8vw, 34px);
+  color: var(--white);
+  line-height: 1.45;
+  margin-bottom: 3rem;
+  font-weight: 300;
+  position: relative;
+  padding-left: 1.5rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.8s ease forwards;
+}
+.hero-quote::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 6px; bottom: 6px;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 0.8s 1s ease forwards;
+}
+
+.btn-primary {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--navy);
+  background: var(--gold);
+  padding: 14px 28px;
+  text-decoration: none;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s;
+  display: inline-block;
+}
+.btn-primary:hover {
+  background: var(--gold-light);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(196,147,58,0.25);
+}
+
+.btn-secondary {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  background: transparent;
+  padding: 13px 28px;
+  text-decoration: none;
+  font-weight: 400;
+  border: 0.5px solid var(--gold-line);
+  transition: all 0.25s;
+  display: inline-block;
+}
+.btn-secondary:hover {
+  border-color: var(--gold);
+  background: var(--gold-faint);
+  transform: translateY(-1px);
+}
+
+.hero-right {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hero-image-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  animation: fadeIn 1.2s 0.6s ease forwards;
+}
+
+.hero-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  filter: brightness(0.85) contrast(1.05);
+}
+
+/* Gold geometric frame overlay */
+.hero-image-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 2rem 2rem 0 2rem;
+  border: 0.5px solid var(--gold-line);
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* Gradient fade at bottom */
+.hero-image-wrap::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 40%;
+  background: linear-gradient(to top, var(--navy) 0%, transparent 100%);
+  z-index: 2;
+}
+
+/* Floating stat cards */
+.hero-stat {
+  position: absolute;
+  background: rgba(14,26,46,0.92);
+  border: 0.5px solid var(--gold-line);
+  backdrop-filter: blur(10px);
+  padding: 1rem 1.5rem;
+  z-index: 10;
+  opacity: 0;
+  animation: fadeIn 0.8s ease forwards;
+}
+.hero-stat-1 { bottom: 12rem; left: -3rem; animation-delay: 1.2s; }
+.hero-stat-2 { top: 8rem; right: 2rem; animation-delay: 1.5s; }
+
+.hero-stat-num {
+  font-family: var(--font-display);
+  font-size: 28px;
+  color: var(--gold-light);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.hero-stat-label {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--lavender);
+  text-transform: uppercase;
+}
+
+/* ── Scroll indicator ───────────────────────────────────── */
+.scroll-hint {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 6rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  animation: fadeIn 1s 1.6s ease forwards;
+  z-index: 10;
+}
+.scroll-line {
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: scrollPulse 2s infinite;
+}
+.scroll-text {
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  color: var(--lavender);
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 1; transform: scaleY(1); transform-origin: top; }
+  50% { opacity: 0.4; transform: scaleY(0.6); transform-origin: top; }
+}
+
+/* ── Section shared styles ──────────────────────────────── */
+section { position: relative; }
+
+.section-tag {
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-tag::before {
+  content: '';
+  width: 24px;
+  height: 0.5px;
+  background: var(--gold);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.5vw, 46px);
+  font-weight: 400;
+  color: var(--gold-pale);
+  line-height: 1.1;
+  letter-spacing: 0.04em;
+  margin-bottom: 1.25rem;
+}
+
+.section-body {
+  font-family: var(--font-serif);
+  font-size: clamp(16px, 1.6vw, 20px);
+  color: var(--mist);
+  line-height: 1.85;
+  font-weight: 300;
+}
+
+/* ── Story section ──────────────────────────────────────── */
+.story {
+  padding: 8rem 6rem;
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 6rem;
+  align-items: center;
+  border-top: 0.5px solid var(--gold-line);
+}
+
+.story-visual {
+  position: relative;
+}
+
+.story-quote-card {
+  background: var(--navy-card);
+  border: 0.5px solid var(--gold-line);
+  padding: 2.5rem;
+  position: relative;
+}
+
+.story-quote-card::before {
+  content: '"';
+  font-family: var(--font-serif);
+  font-size: 120px;
+  color: var(--gold);
+  opacity: 0.12;
+  position: absolute;
+  top: -20px;
+  left: 20px;
+  line-height: 1;
+}
+
+.story-quote-text {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(18px, 2vw, 24px);
+  color: var(--white);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+.story-quote-attr {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+
+.story-accent {
+  position: absolute;
+  bottom: -1.5rem;
+  right: -1.5rem;
+  width: 80px;
+  height: 80px;
+  border: 0.5px solid var(--gold-line);
+  background: var(--navy-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.story-accent-glyph {
+  font-family: var(--font-display);
+  font-size: 28px;
+  color: var(--gold);
+  opacity: 0.6;
+}
+
+.story-pillars {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 2.5rem;
+}
+
+.pillar-chip {
+  border: 0.5px solid var(--gold-line);
+  padding: 0.75rem 1rem;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--lavender);
+  text-transform: uppercase;
+  text-align: center;
+  background: var(--gold-faint);
+  transition: all 0.2s;
+}
+.pillar-chip:hover {
+  border-color: var(--gold);
+  color: var(--gold-light);
+}
+
+/* ── Teachings section ──────────────────────────────────── */
+.teachings {
+  padding: 8rem 6rem;
+  background: var(--navy-mid);
+  border-top: 0.5px solid var(--gold-line);
+  border-bottom: 0.5px solid var(--gold-line);
+}
+
+.teachings-header {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 5rem;
+}
+
+.teachings-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5px;
+  background: var(--gold-line);
+  border: 0.5px solid var(--gold-line);
+}
+
+.teaching-card {
+  background: var(--navy-card);
+  padding: 2.5rem 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s;
+}
+.teaching-card:hover { background: var(--navy-light); }
+
+.teaching-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.teaching-card:hover::before { opacity: 1; }
+
+.teaching-num {
+  font-family: var(--font-display);
+  font-size: 48px;
+  color: var(--gold);
+  opacity: 0.12;
+  line-height: 1;
+  margin-bottom: 1rem;
+  font-weight: 400;
+}
+
+.teaching-title {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  color: var(--gold-light);
+  margin-bottom: 0.75rem;
+  font-weight: 400;
+}
+
+.teaching-body {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 15px;
+  color: var(--mist);
+  line-height: 1.75;
+}
+
+/* ── Products section ───────────────────────────────────── */
+.products {
+  padding: 8rem 6rem;
+}
+
+.products-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 4rem;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.product-card {
+  background: var(--navy-card);
+  border: 0.5px solid var(--gold-line);
+  padding: 2rem;
+  position: relative;
+  transition: all 0.3s;
+  text-decoration: none;
+  display: block;
+  color: inherit;
+}
+.product-card:hover {
+  border-color: var(--gold);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.4), 0 0 0 0.5px rgba(196,147,58,0.2);
+}
+
+.product-badge {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--navy);
+  background: var(--gold);
+  padding: 4px 10px;
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+.product-badge.free { background: var(--lavender); }
+.product-badge.bundle { background: var(--gold-pale); }
+
+.product-icon {
+  font-size: 32px;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.product-title {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  color: var(--white);
+  margin-bottom: 0.5rem;
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+.product-sub {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--lavender);
+  margin-bottom: 1.25rem;
+  line-height: 1.6;
+}
+
+.product-price {
+  font-family: var(--font-display);
+  font-size: 24px;
+  color: var(--gold-light);
+  letter-spacing: 0.06em;
+}
+
+.product-price span {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--lavender);
+  letter-spacing: 0.1em;
+  margin-left: 4px;
+}
+
+.product-arrow {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  color: var(--gold);
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: all 0.25s;
+  font-size: 18px;
+}
+.product-card:hover .product-arrow { opacity: 1; transform: translateX(0); }
+
+/* ── Vision board CTA ───────────────────────────────────── */
+.vision-cta {
+  padding: 6rem;
+  background: var(--navy-mid);
+  border-top: 0.5px solid var(--gold-line);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+}
+
+.vision-cta-text .section-body {
+  margin-bottom: 2.5rem;
+}
+
+.vision-preview {
+  background: var(--navy-card);
+  border: 0.5px solid var(--gold-line);
+  padding: 2.5rem;
+  position: relative;
+}
+
+.vision-preview::after {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 0.5px solid rgba(196,147,58,0.12);
+  pointer-events: none;
+}
+
+.vision-preview-title {
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.vision-field {
+  margin-bottom: 1rem;
+}
+
+.vision-field-label {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.vision-field-line {
+  height: 1px;
+  background: var(--gold-line);
+  margin-bottom: 6px;
+}
+
+.vision-field-example {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 13px;
+  color: rgba(245,236,215,0.35);
+}
+
+/* ── Philosophy section ─────────────────────────────────── */
+.philosophy {
+  padding: 8rem 6rem;
+  border-top: 0.5px solid var(--gold-line);
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 6rem;
+  align-items: center;
+}
+
+.philosophy-principles {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.principle {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.principle-num {
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  color: var(--gold);
+  padding-top: 4px;
+}
+
+.principle-title {
+  font-family: var(--font-serif);
+  font-size: 19px;
+  color: var(--white);
+  margin-bottom: 0.4rem;
+  font-weight: 400;
+}
+
+.principle-body {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 15px;
+  color: var(--mist);
+  line-height: 1.7;
+}
+
+/* ── Email signup ───────────────────────────────────────── */
+.signup {
+  padding: 7rem 6rem;
+  background: var(--navy-mid);
+  border-top: 0.5px solid var(--gold-line);
+  text-align: center;
+}
+
+.signup-inner {
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.signup-title {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3vw, 38px);
+  color: var(--gold-pale);
+  margin-bottom: 1rem;
+  letter-spacing: 0.04em;
+}
+
+.signup-body {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 17px;
+  color: var(--lavender);
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+}
+
+.signup-form {
+  display: flex;
+  gap: 0;
+  border: 0.5px solid var(--gold-line);
+}
+
+.signup-input {
+  flex: 1;
+  background: rgba(8,15,28,0.8);
+  border: none;
+  padding: 14px 18px;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 15px;
+  color: var(--white);
+  outline: none;
+}
+.signup-input::placeholder { color: rgba(245,236,215,0.3); }
+
+.signup-btn {
+  background: var(--gold);
+  border: none;
+  padding: 14px 24px;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--navy);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+.signup-btn:hover { background: var(--gold-light); }
+
+.signup-note {
+  font-size: 11px;
+  color: rgba(169,155,190,0.6);
+  margin-top: 1rem;
+  letter-spacing: 0.06em;
+}
+
+/* ── Footer ─────────────────────────────────────────────── */
+footer {
+  padding: 3rem 6rem;
+  border-top: 0.5px solid var(--gold-line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-logo {
+  font-family: var(--font-display);
+  font-size: 15px;
+  letter-spacing: 0.18em;
+  color: var(--gold);
+}
+
+.footer-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.footer-links a {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--lavender);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--gold-light); }
+
+.footer-tagline {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 13px;
+  color: rgba(169,155,190,0.5);
+}
+
+/* ── Animations ─────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Responsive ─────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero-right { height: 55vw; }
+  .hero-left { padding: 8rem 2.5rem 3rem; }
+  .hero-stat-1 { left: 1rem; bottom: 8rem; }
+  .scroll-hint { left: 2.5rem; }
+  .story, .philosophy { grid-template-columns: 1fr; gap: 3rem; padding: 5rem 2.5rem; }
+  .teachings, .products, .vision-cta, .signup { padding: 5rem 2.5rem; }
+  .teachings-grid, .products-grid { grid-template-columns: 1fr; }
+  .vision-cta { grid-template-columns: 1fr; }
+  nav { padding: 1.25rem 2rem; }
+  .nav-links { display: none; }
+  footer { padding: 2rem 2.5rem; flex-direction: column; text-align: center; }
+  .products-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+}
+
+@media (max-width: 600px) {
+  .hero-name { font-size: 48px; }
+  .hero-stat-2 { display: none; }
+  .signup-form { flex-direction: column; }
+  .story-pillars { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Navigation -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo">AURELIA</a>
+  <ul class="nav-links">
+    <li><a href="#story">Her Story</a></li>
+    <li><a href="#teachings">Teachings</a></li>
+    <li><a href="#products">The Shop</a></li>
+    <li><a href="#vision">Vision Board</a></li>
+  </ul>
+  <a href="https://stan.store/aureliamanifests" class="nav-cta">Begin Here</a>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="home">
+  <div class="hero-left">
+    <div class="hero-tag">Law of Attraction · Manifestation · Abundance</div>
+    <h1 class="hero-name">AURELIA</h1>
+    <p class="hero-title">Manifestation Guide · Spiritual Teacher<br>Former Architect of the Physical World</p>
+    <blockquote class="hero-quote">
+      You don't attract what you want.<br>
+      You attract who you <em>are.</em>
+    </blockquote>
+    <div class="hero-buttons">
+      <a href="https://stan.store/aureliamanifests" class="btn-primary">Explore the teachings</a>
+      <a href="#story" class="btn-secondary">Her story</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-image-wrap">
+      <img src="aurelia-hero.jpg" alt="Aurelia — manifestation guide and Law of Attraction teacher" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(160deg, #1C2D47 0%, #0E1A2E 100%)'">
+    </div>
+
+    <div class="hero-stat hero-stat-1">
+      <div class="hero-stat-num">8K+</div>
+      <div class="hero-stat-label">Souls on this journey</div>
+    </div>
+
+    <div class="hero-stat hero-stat-2">
+      <div class="hero-stat-num">✦</div>
+      <div class="hero-stat-label">Align · Attract · Become</div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span class="scroll-text">Scroll</span>
+  </div>
+</section>
+
+<!-- Story -->
+<section class="story" id="story">
+  <div class="story-visual reveal">
+    <div class="story-quote-card">
+      <p class="story-quote-text">
+        "I spent fifteen years designing buildings — drawing blueprints, calculating loads, turning visions into concrete reality. And then I discovered something that changed everything: every structure I had ever built began first as a thought. A frequency. An intention held in someone's mind long before a single stone was laid."
+      </p>
+      <div class="story-quote-attr">— Aurelia</div>
+      <div class="story-accent">
+        <span class="story-accent-glyph">☽</span>
+      </div>
+    </div>
+
+    <div class="story-pillars">
+      <div class="pillar-chip">Morning Rituals</div>
+      <div class="pillar-chip">Mindset & Belief</div>
+      <div class="pillar-chip">LOA Science</div>
+      <div class="pillar-chip">Abundance</div>
+      <div class="pillar-chip">Love & Alignment</div>
+      <div class="pillar-chip">Visualisation</div>
+      <div class="pillar-chip">Spiritual Prayer</div>
+      <div class="pillar-chip">Her Teachings</div>
+    </div>
+  </div>
+
+  <div class="story-right reveal">
+    <div class="section-tag">Her Story</div>
+    <h2 class="section-title">From Blueprint<br>to Frequency</h2>
+    <div class="section-body">
+      <p style="margin-bottom:1.25rem;">
+        Aurelia grew up between two worlds — the precision of Eastern European architecture and the quiet, ancient spirituality that runs through her bloodline. She trained as an architect, rising to lead projects across three countries, designing spaces where people would live, love and dream.
+      </p>
+      <p style="margin-bottom:1.25rem;">
+        But it was in the silence between projects — in the moments of stillness — that she encountered the Law of Attraction. Not as a concept, but as a lived truth. She began to see that the universe operates on the same principles as a great building: intention, structure, frequency and trust in the process.
+      </p>
+      <p>
+        Today, Aurelia brings that same precision and reverence to the art of manifestation. Her teachings blend the ancient wisdom of spiritual tradition with the grounded clarity of someone who has spent a lifetime turning invisible visions into tangible reality.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Teachings -->
+<section class="teachings" id="teachings">
+  <div class="teachings-header reveal">
+    <div class="section-tag" style="justify-content:center;">Core Teachings</div>
+    <h2 class="section-title">What Aurelia Teaches</h2>
+    <p class="section-body">Eight pillars of wisdom. Each one a doorway into your most abundant, aligned and extraordinary life.</p>
+  </div>
+
+  <div class="teachings-grid reveal">
+    <div class="teaching-card">
+      <div class="teaching-num">01</div>
+      <div class="teaching-title">Morning Manifestation Rituals</div>
+      <p class="teaching-body">How you begin your day sets the frequency for everything that follows. Aurelia's morning practices are simple, sacred and profoundly effective.</p>
+    </div>
+    <div class="teaching-card">
+      <div class="teaching-num">02</div>
+      <div class="teaching-title">Mindset & Belief Reprogramming</div>
+      <p class="teaching-body">Every limitation you experience began as a belief. Aurelia teaches you to identify, dissolve and replace the stories that have kept abundance at bay.</p>
+    </div>
+    <div class="teaching-card">
+      <div class="teaching-num">03</div>
+      <div class="teaching-title">The Science & Spirituality of LOA</div>
+      <p class="teaching-body">You think on frequencies. The universe responds to vibration. Aurelia bridges the ancient and the quantum — making the invisible laws of attraction clear and actionable.</p>
+    </div>
+    <div class="teaching-card">
+      <div class="teaching-num">04</div>
+      <div class="teaching-title">Manifesting Abundance & Wealth</div>
+      <p class="teaching-body">Money is energy. Aurelia helps you heal your relationship with abundance and become a natural, effortless receiver of financial prosperity.</p>
+    </div>
+    <div class="teaching-card">
+      <div class="teaching-num">05</div>
+      <div class="teaching-title">Manifesting Love & Relationships</div>
+      <p class="teaching-body">All love begins within. Aurelia's teachings on self-worth, alignment and attraction help you call in the relationships your soul is ready for.</p>
+    </div>
+    <div class="teaching-card">
+      <div class="teaching-num">06</div>
+      <div class="teaching-title">Scripting, Visualisation & Technique</div>
+      <p class="teaching-body">From the 369 method to sacred scripting — Aurelia shares the practical tools that shift your subconscious mind and accelerate your manifestations.</p>
+    </div>
+    <div class="teaching-card">
+      <div class="teaching-num">07</div>
+      <div class="teaching-title">Spiritual Alignment & Prayer</div>
+      <p class="teaching-body">Where the Law of Attraction meets faith, gratitude and divine timing. Aurelia honours the sacred thread that runs through all great spiritual traditions.</p>
+    </div>
+    <div class="teaching-card">
+      <div class="teaching-num">08</div>
+      <div class="teaching-title">Aurelia's Wisdom & Teachings</div>
+      <p class="teaching-body">Distilled from a lifetime of study, practice and transformation — Aurelia's original insights on becoming the person your desires are waiting for.</p>
+    </div>
+    <div class="teaching-card" style="background: var(--gold-faint); display:flex; align-items:center; justify-content:center; text-align:center; padding:3rem 2rem;">
+      <div>
+        <div style="font-family:var(--font-display); font-size:32px; color:var(--gold); margin-bottom:1rem;">☽</div>
+        <p style="font-family:var(--font-serif); font-style:italic; font-size:18px; color:var(--gold-light); line-height:1.7;">"Align your mind.<br>Attract your life.<br>Become what you desire."</p>
+        <div style="font-size:10px; letter-spacing:0.2em; color:var(--lavender); margin-top:1rem; text-transform:uppercase;">— Aurelia</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Products -->
+<section class="products" id="products">
+  <div class="products-header reveal">
+    <div>
+      <div class="section-tag">The Shop</div>
+      <h2 class="section-title">Begin Your Journey</h2>
+    </div>
+    <a href="https://stan.store/aureliamanifests" class="btn-secondary">View all →</a>
+  </div>
+
+  <div class="products-grid reveal">
+    <a href="https://stan.store/aureliamanifests" class="product-card">
+      <span class="product-badge">Most Popular</span>
+      <span class="product-icon">📖</span>
+      <div class="product-title">The Aurelia Manifestation Method</div>
+      <div class="product-sub">A 7 Day Guide to Attracting What You Desire</div>
+      <div class="product-price">£17 <span>PDF guide</span></div>
+      <div class="product-arrow">→</div>
+    </a>
+
+    <a href="https://stan.store/aureliamanifests" class="product-card">
+      <span class="product-badge bundle">Best Value</span>
+      <span class="product-icon">✨</span>
+      <div class="product-title">The Aurelia Starter Bundle</div>
+      <div class="product-sub">7 Day Guide + 28 Day Calendar + Vision Board</div>
+      <div class="product-price">£22 <span>bundle · save £11</span></div>
+      <div class="product-arrow">→</div>
+    </a>
+
+    <a href="https://stan.store/aureliamanifests" class="product-card">
+      <span class="product-badge">Printable</span>
+      <span class="product-icon">🗺️</span>
+      <div class="product-title">My Manifestation Vision Board</div>
+      <div class="product-sub">9-page printable workbook — write it into existence</div>
+      <div class="product-price">£9 <span>printable PDF</span></div>
+      <div class="product-arrow">→</div>
+    </a>
+
+    <a href="https://stan.store/aureliamanifests" class="product-card">
+      <span class="product-badge">Daily Practice</span>
+      <span class="product-icon">📅</span>
+      <div class="product-title">28 Day Affirmation Calendar</div>
+      <div class="product-sub">One powerful affirmation for each day of your journey</div>
+      <div class="product-price">£7 <span>printable PDF</span></div>
+      <div class="product-arrow">→</div>
+    </a>
+
+    <a href="/vision-board" class="product-card">
+      <span class="product-badge free">Free Tool</span>
+      <span class="product-icon">💫</span>
+      <div class="product-title">Interactive Vision Board App</div>
+      <div class="product-sub">Build your vision board online — saves to your browser</div>
+      <div class="product-price">Free <span>web app</span></div>
+      <div class="product-arrow">→</div>
+    </a>
+
+    <div class="product-card" style="border-style:dashed; opacity:0.6; cursor:default;">
+      <span class="product-badge" style="background:var(--navy-light); color:var(--lavender);">Coming Soon</span>
+      <span class="product-icon">🎓</span>
+      <div class="product-title">The Aurelia Online Course</div>
+      <div class="product-sub">A deep immersion into the complete Law of Attraction system</div>
+      <div class="product-price" style="color:var(--lavender);">Join the waitlist</div>
+    </div>
+  </div>
+</section>
+
+<!-- Vision Board CTA -->
+<section class="vision-cta" id="vision">
+  <div class="vision-cta-text reveal">
+    <div class="section-tag">Free Gift</div>
+    <h2 class="section-title">Build Your Vision Board</h2>
+    <p class="section-body">
+      Aurelia's interactive vision board app guides you through every area of your desired life — home, wealth, love, health and purpose. Write it in the present tense. Sign the sacred contract. Return to it every morning.
+    </p>
+    <a href="/vision-board" class="btn-primary">Open the vision board →</a>
+  </div>
+
+  <div class="vision-preview reveal">
+    <div class="vision-preview-title">MY MANIFESTATION VISION BOARD</div>
+    <div class="vision-field">
+      <div class="vision-field-label">I am manifesting...</div>
+      <div class="vision-field-line"></div>
+      <div class="vision-field-example">I live in a beautiful home that fills me with peace...</div>
+    </div>
+    <div class="vision-field">
+      <div class="vision-field-label">My abundance affirmation...</div>
+      <div class="vision-field-line"></div>
+      <div class="vision-field-example">Money flows to me easily and joyfully...</div>
+    </div>
+    <div class="vision-field">
+      <div class="vision-field-label">My purpose in this world is...</div>
+      <div class="vision-field-line"></div>
+      <div class="vision-field-example">I am here to inspire, create and uplift...</div>
+    </div>
+    <div style="text-align:center; margin-top:1.5rem; font-family:var(--font-display); font-size:11px; letter-spacing:0.2em; color:var(--gold); opacity:0.6;">✦ AUTO-SAVES TO YOUR BROWSER ✦</div>
+  </div>
+</section>
+
+<!-- Philosophy -->
+<section class="philosophy" id="philosophy">
+  <div class="reveal">
+    <div class="section-tag">The Foundation</div>
+    <h2 class="section-title">Aurelia's Core Principles</h2>
+    <p class="section-body" style="margin-bottom:3rem;">These are the truths that Aurelia has built her life and her teachings upon. They are not theories. They are lived realities.</p>
+    <a href="#products" class="btn-secondary">Explore the teachings →</a>
+  </div>
+
+  <div class="philosophy-principles reveal">
+    <div class="principle">
+      <div class="principle-num">I</div>
+      <div>
+        <div class="principle-title">Identity Before Desire</div>
+        <p class="principle-body">You do not attract what you want. You attract who you are. Become the person first, and everything follows.</p>
+      </div>
+    </div>
+    <div class="principle">
+      <div class="principle-num">II</div>
+      <div>
+        <div class="principle-title">Frequency is Everything</div>
+        <p class="principle-body">Every thought, emotion and belief carries a vibration. Align your frequency with your desire and the universe has no choice but to deliver.</p>
+      </div>
+    </div>
+    <div class="principle">
+      <div class="principle-num">III</div>
+      <div>
+        <div class="principle-title">Gratitude Opens the Gate</div>
+        <p class="principle-body">Gratitude is not the reward for receiving. It is the reason you receive. Begin there, and watch everything shift.</p>
+      </div>
+    </div>
+    <div class="principle">
+      <div class="principle-num">IV</div>
+      <div>
+        <div class="principle-title">Surrender is Strength</div>
+        <p class="principle-body">Release the need to control the how. Set your intention, raise your vibration, take inspired action — and trust the timing of the universe completely.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Email Signup -->
+<section class="signup" id="signup">
+  <div class="signup-inner reveal">
+    <div class="section-tag" style="justify-content:center;">Stay Connected</div>
+    <h2 class="signup-title">Join Aurelia's Inner Circle</h2>
+    <p class="signup-body">Receive weekly manifestation wisdom, exclusive teachings and early access to new tools — delivered with love, directly to you.</p>
+    <div class="signup-form">
+      <input type="email" class="signup-input" placeholder="Your email address...">
+      <button class="signup-btn">Join Now</button>
+    </div>
+    <p class="signup-note">No noise. No spam. Only wisdom worth receiving. ✦</p>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-logo">AURELIA</div>
+  <ul class="footer-links">
+    <li><a href="https://tiktok.com/@aurelia.manifests">TikTok</a></li>
+    <li><a href="https://instagram.com/aurelia.manifests">Instagram</a></li>
+    <li><a href="https://stan.store/aureliamanifests">Shop</a></li>
+    <li><a href="/vision-board">Vision Board</a></li>
+  </ul>
+  <div class="footer-tagline">Align · Attract · Become ✦</div>
+</footer>
+
+<script>
+// Custom cursor
+const cursor = document.getElementById('cursor');
+const ring   = document.getElementById('cursorRing');
+let mx=0, my=0, rx=0, ry=0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx + 'px';
+  cursor.style.top  = my + 'px';
+});
+
+function animRing() {
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) *.12;
+  ring.style.left = rx + 'px';
+  ring.style.top  = ry + 'px';
+  requestAnimationFrame(animRing);
+}
+animRing();
+
+document.querySelectorAll('a, button').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.transform = 'translate(-50%,-50%) scale(2.5)';
+    ring.style.transform = 'translate(-50%,-50%) scale(1.5)';
+    ring.style.borderColor = 'rgba(196,147,58,0.8)';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+    ring.style.transform = 'translate(-50%,-50%) scale(1)';
+    ring.style.borderColor = 'rgba(196,147,58,0.5)';
+  });
+});
+
+// Nav scroll effect
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.12 });
+
+reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
